@@ -1,3 +1,9 @@
+## Updated Feb 27th.
+
+In this version, the codes are modularized. It remains to include local data loading as a defined function.
+
+---
+
 The codes by default turn on cuda (GPU) to speed up the training and testing evaluations.
 
 In the code, I call the proposed algorithm as ``AMFED`` (Adversarial Memory Federated). This is for ease of exposition only. 
@@ -41,7 +47,7 @@ Although the results are printed out in each iteration, it requires extra effort
   * AMFED_Prox: the proposed algorithm with FedProx type updates;
   * FEDAVG_Prox: the regular FedProx algorithm.
 * --weight_decay: 1e-3 by default.
-* --step_decay: the indicator of a decaying step size or a constant step size;
+* --step_decay: linear for '1/T' and sqrt for '1/sqrt(T)' the indicator of a decaying step size or a constant step size;
 * --dataset_name: MNIST or CIFAR10
 * --batch_size: mini-batch size of the mini-batch stochastic gradients
 
@@ -54,6 +60,7 @@ Although the results are printed out in each iteration, it requires extra effort
 
 * --size : the number of clients
 * --sample_frac : the fraction to be sampled. It can be calculated by ``the number of sampled clients/ size``
+* --sample_strategy: 'uar' for uniformly at random and 'withp' for with probability p.
 * --communication_round
 * --local_steps: the argument to override the default settings and set a constant local steps
 * --local_epochs: 2 by default. The multiplicative factor to the minimum nuber of the batches.
@@ -64,7 +71,7 @@ Although the results are printed out in each iteration, it requires extra effort
 *Adversarial Dropout*
 
 * --alpha: the parameter to control the dropout fraction in *Scheme 2*.
-* --dropout: 1 for dropout *Scheme 1*, and 2 for dropout *Scheme 2*.
+* --dropout: alternate for dropout *Scheme 1*, and forever for dropout *Scheme 2*.
 
 *Coding*
 
