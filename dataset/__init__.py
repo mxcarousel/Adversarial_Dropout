@@ -57,6 +57,9 @@ class get_dataset:
             self.test_set = MNIST(root=path, train=False, download=True, transform=self.transforms)
             self.input_size = (1, 28, 28)
             self.classes = 10
+        
+        """"elif self,dataset_name == xxx"""
+
 
         # all set loading dataset
     def fetch_rank_data(self, rank, iid, is_test):
