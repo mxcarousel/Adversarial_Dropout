@@ -22,7 +22,6 @@ class Worker:
         self.model = model
         self.G0 = model_initialization(model)
         self.G1 = model_initialization(model)
-        self.difference = 0
         self.train_loader = train_loader
         self.test_loader = test_loader
         self.train_loader_iter = train_loader.__iter__()
@@ -47,8 +46,6 @@ class Worker:
         self.optimizer.zero_grad()
         self.optimizer.param_groups[0]['lr'] *= constant
         loss.backward()
-
-        # self.model.cpu()
 
     def step(self):
         self.model.train()
@@ -111,8 +108,3 @@ class Worker:
         self.model.to('cpu')
         self.G0.to('cpu')
         self.G1.to('cpu')
-
-    def update_difference(self, global_model):
-        self.difference = 0
-        for w, w_t in zip(self.model.parameters(), global_model.parameters()):
-            self.difference += (w - w_t).norm(2)

@@ -5,42 +5,43 @@ def get_config():
     parser = argparse.ArgumentParser()
     # distribute
     parser.add_argument('-S', '--size', help='size, default=10',
-                        dest='size', type=int, default=100)
+                        dest='size', type=int, default=40)
     parser.add_argument('-SS', '--sample_frac', help='sample_frac',type=float,default=0.1)
     parser.add_argument('-SU', '--speedup', help='speedup ratio, no speedup default=1,1/p,1/sqrt(p)', type=float,
                         default=0)
     # model
     parser.add_argument('-mn', '--model_name', help='model name, default=\'Linear\'',
-                        dest='model_name', type=str, default='lenet')
+                        dest='model_name', type=str, default='Logistic')
     parser.add_argument('-A', '--algorithm', help='algorithm type: AMFED, MIFA, FEDAVG, AMFED_Prox, FEDAVG_Prox', default='AMFED',
                         type=str)
-    # dataset
-    parser.add_argument('-p', '--path', help='path of dataset, default=\'../data\'',
-                        dest='path', type=str, default='../data')
-    parser.add_argument('-dn', '--dataset_name', help='dataset_name, default=\'MNIST\'',
-                        dest='dataset_name', type=str, default='CIFAR10')
-    parser.add_argument('-bs', '--batch_size', help='batch_size, default=32',
-                        dest='batch_size', type=int, default=10)
-    parser.add_argument('-alpha', '--alpha', help='adversarial drop-out rate', type=float,
+    # dropout
+    parser.add_argument('--sample_strategy', help='sampling strategy: uar withp', type=str, default='uar')
+    parser.add_argument('--dropout', help='drop-out scheme mode: forever, alternate', type=str,default='alternate')
+    parser.add_argument('--alpha', help='adversarial drop-out rate', type=float,
                         default=0.1)
-    parser.add_argument('-DO', 
-                        '--dropout', 
-                        help='drop-out mode: 1:round alternating; 2:dropout forever;',
-                        type=int,
-                        default=2)
-    parser.add_argument('-SD','--step_decay', help='constant lr or adaptive lr', type=int, default=1)
-    parser.add_argument('-R', '--repetition', help='no greater than 10 dropout 2', type=int, default=4)
-    parser.add_argument('-I', '--interval', help='dropout2', type=int, default=100)
-    parser.add_argument('-id', '--iid', help='iid distribution, 1: iid, 2: given class',
+    parser.add_argument('--threshold', help='dropout threshold', type=int, default=5)
+    parser.add_argument('--repetition', help='no greater than 10 dropout 2', type=int, default=4)
+    parser.add_argument('--interval', help='dropout2', type=int, default=100)
+   
+    # dataset
+    parser.add_argument( '--path', help='path of dataset, default=\'../data\'',
+                        dest='path', type=str, default='../data')
+    parser.add_argument('--dataset_name', help='dataset_name, default=\'MNIST\'',
+                        dest='dataset_name', type=str, default='MNIST')
+    parser.add_argument('--batch_size', help='batch_size, default=32',
+                        dest='batch_size', type=int, default=32)
+    parser.add_argument('--iid', help='iid distribution, 1: iid, 2: given class',
                         type=int, default=2)
     parser.add_argument('--class_per_client', help='class_per_client', type=int, default=2)
-    parser.add_argument('-ns', '--n_swap', help='n_swap, default=0',
+    parser.add_argument('--n_swap', help='n_swap, default=0',
                         dest='n_swap', type=int, default=None)
     # train
     parser.add_argument('-lr', '--learning_rate', help='learning_rate, default=0.1',
                         dest='lr', type=float, default=0.1)
     parser.add_argument('-mu','--mu', help='Proximal parameter for FedProx', dest='mu',
                         type=float, default=0.1)
+    parser.add_argument('--step_decay', help='sqrt/ linear/ constant', type=str, default='sqrt')
+
     parser.add_argument('-wd', '--weight_decay', help='weight_decay, default=1e-4',
                         dest='weight_decay', type=float, default=1e-3)
     parser.add_argument('-cr', '--communication_round', help='communication round, default=500',
