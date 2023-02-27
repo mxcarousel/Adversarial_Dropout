@@ -47,7 +47,7 @@ class trainer(ABC):
             
             if self.step_decay == 'sqrt':
                 lr = lr0 / np.sqrt(round)
-            elif self.step_decay == 'sublinear':
+            elif self.step_decay == 'linear':
                 lr = lr0 / round
 
             if round % 2 == 0:

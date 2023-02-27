@@ -40,7 +40,7 @@ def get_config():
                         dest='lr', type=float, default=0.1)
     parser.add_argument('-mu','--mu', help='Proximal parameter for FedProx', dest='mu',
                         type=float, default=0.1)
-    parser.add_argument('--step_decay', help='sqrt/ sublinear/ constant', type=str, default='sqrt')
+    parser.add_argument('--step_decay', help='sqrt/ linear/ constant', type=str, default='sqrt')
 
     parser.add_argument('-wd', '--weight_decay', help='weight_decay, default=1e-4',
                         dest='weight_decay', type=float, default=1e-3)
