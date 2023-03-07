@@ -40,7 +40,9 @@ class trainer(ABC):
             active_clients , selected_clients = sample_client(sample_strategy, len(self.worker_list), frac)
 
             selected_clients = dropout_class.drop(active_clients,selected_clients,round)
-
+            """self.update let workers update their local models ($s$ step gradient descent),"""
+            """self.agg let the server aggregate local models,"""
+            """self.broadcast replaces the selected_clients' local models with the aggregated server model."""
             self.update(selected_clients, lr)
             self.agg(selected_clients)
             self.broadcast(selected_clients)
