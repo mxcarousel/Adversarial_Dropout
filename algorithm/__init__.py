@@ -43,7 +43,7 @@ class trainer(ABC):
 
             self.update(selected_clients, lr)
             self.agg(selected_clients)
-
+            self.broadcast(selected_clients)
             
             if self.step_decay == 'sqrt':
                 lr = lr0 / np.sqrt(round)
@@ -119,6 +119,10 @@ class trainer(ABC):
             if total_test_acc > TEST_ACCURACY:
                 torch.save(model.state_dict(), f"./trained/{algorithm}_{n_swap}_best.pt")
             torch.save(model.state_dict(), f"./trained/{algorithm}_{n_swap}_last.pt")
+
+    def broadcast(self,selected_clients):
+        for index in selected_clients:
+            self.worker_list[index].load_model_params(self.server.get_model_params())
 
     @abstractmethod
     def update(self,selected_clients):
